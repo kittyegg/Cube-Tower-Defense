@@ -1,0 +1,100 @@
+using UnityEngine;
+using UnityEngine.Events;
+using System.Linq;
+using System.Collections.Generic;
+
+public class SandPathBuildService : MonoBehaviour
+{
+    [SerializeField] private GameManager _gameManager;
+    [SerializeField] private BlockDetector _blockDetector;
+    [SerializeField] private BlockScript _blockPrefab;
+    [SerializeField] private BlockScript _grassBlockPrefab;
+    [SerializeField] private BlockScript _pathStart;
+    [SerializeField] private BlockScript _pathEnd;
+    [SerializeField] private BlockScript[] _pathFinish;
+    [SerializeField] private BlockScript[] _predefinedBlocks;
+
+    [SerializeField] private UnityEvent<BlockScript> _onBlockDestroy;
+    [SerializeField] private UnityEvent _onBuildComplete;
+
+    public event UnityAction<BlockScript> OnBlockDestroy
+    {
+        add => _onBlockDestroy.AddListener(value);
+        remove => _onBlockDestroy.RemoveListener(value);
+    }
+    public event UnityAction OnBuildComplete
+    {
+        add => _onBuildComplete.AddListener(value);
+        remove => _onBuildComplete.RemoveListener(value);
+    }
+
+    private BlockScript _currentBlock;
+    private readonly List<BlockScript> _blocksInPath = new();
+
+    private void Start() => InitBlocks();
+
+    private void InitBlocks()
+    {
+        _currentBlock = _pathStart;
+        _blocksInPath.AddRange(_predefinedBlocks);
+    }
+    
+    public void DestroyBlock(BlockScript block)
+    {
+        _onBlockDestroy?.Invoke(block);
+        Destroy(block.gameObject);
+    }
+    
+    private void OnEnable()
+    {
+        _blockDetector.OnBlockClicked += OnBlockDetected;
+    }
+    private void OnDisable()
+    {
+        _blockDetector.OnBlockClicked -= OnBlockDetected;
+    }
+
+    public void ResetPath()
+    {
+        // TODO: исправить удаление блоков финала пути
+        for (int i = _predefinedBlocks.Length; i < _blocksInPath.Count; i++)
+        {
+            var block = _blocksInPath[i];
+            Instantiate(_grassBlockPrefab, block.transform.position, block.transform.localRotation, block.transform.parent);
+            Destroy(block.gameObject);
+        }
+
+        _blocksInPath.Clear();
+        InitBlocks();
+    }
+
+    private void OnBlockDetected(BlockScript block)
+    {
+        if (_gameManager.CurrentState != GameManager.GameState.BuildingPath)
+            return;
+        if (!_currentBlock.GetNeighbors().Contains(block) ||
+            block.GetNeighbors().Count((o) => o.Type == BlockScript.BlockType.Sand) > 1)
+            return;
+
+        var t = block.transform;
+        _currentBlock = Instantiate(_blockPrefab, t.position, t.localRotation, t.parent);
+        _blocksInPath.Add(_currentBlock);
+        if (_pathFinish.Contains(block))
+        {
+            _currentBlock = _pathEnd;
+            _blocksInPath.Add(_currentBlock);
+            _onBuildComplete?.Invoke();
+        }
+
+        DestroyBlock(block);
+    }
+
+    public IEnumerable<Vector3> GetPath() =>
+        _blocksInPath.Select(b =>
+        {
+            var pos = b.transform.position;
+            pos.y += 1f;
+
+            return pos;
+        });
+}
