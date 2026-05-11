@@ -9,6 +9,7 @@ public class TurretsShop : MonoBehaviour
     [SerializeField] private BlockDetector _blockDetector;
     [SerializeField] private Transform _turretsHolder;
     [SerializeField] private InputAction _deselectAction;
+    [SerializeField] private float _sellingCoefficient = 0.5f;
     [SerializeField] private TurretShopItem[] _turretShopItems;
     [SerializeField] private UnityEvent<TurretShopItem> _onTurretSelected;
     [SerializeField] private UnityEvent _onTurretDeselected;
@@ -71,6 +72,12 @@ public class TurretsShop : MonoBehaviour
 
     private void OnBlockClicked(BlockScript block)
     {
+        if (block.Type == BlockScript.BlockType.Turret)
+        {
+            DestroyTurret(block.GetComponent<Turret>());
+            return;
+        }
+
         if (!block.CompareTag("GrassBlock") || !_isTurretSelected || _selectedTurret.Price > _wallet.Money)
             return;
 
@@ -81,5 +88,15 @@ public class TurretsShop : MonoBehaviour
         _wallet.TakeMoney(_selectedTurret.Price);
         if (_wallet.Money < _selectedTurret.Price)
             DeselectTurret();
+    }
+
+    private void DestroyTurret(Turret turret)
+    {
+        // TODO: проверять нажата ли кнопку продажи туррелей
+        if (turret == null)
+            return;
+
+        _wallet.AddMoney(Mathf.RoundToInt(turret.Price * _sellingCoefficient));
+        Destroy(turret.gameObject);
     }
 }
