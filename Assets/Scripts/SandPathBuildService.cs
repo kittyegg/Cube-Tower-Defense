@@ -72,7 +72,8 @@ public class SandPathBuildService : MonoBehaviour
     {
         if (_gameManager.CurrentState != GameManager.GameState.BuildingPath)
             return;
-        if (!_currentBlock.GetNeighbors().Contains(block) ||
+        if (!block.CompareTag("GrassBlock") ||
+            !_currentBlock.GetNeighbors().Contains(block) ||
             block.GetNeighbors().Count((o) => o.Type == BlockScript.BlockType.Sand) > 1)
             return;
 

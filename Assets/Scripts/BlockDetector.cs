@@ -48,7 +48,7 @@ public class BlockDetector : MonoBehaviour
     private BlockScript DetectBlockOnPosition(Vector2 position)
     {
         var ray = Camera.main.ScreenPointToRay(position);
-        if (Physics.Raycast(ray, out var hit) && hit.transform.CompareTag("GrassBlock"))
+        if (Physics.Raycast(ray, out var hit))
             return hit.transform.GetComponent<BlockScript>();
 
         return null;

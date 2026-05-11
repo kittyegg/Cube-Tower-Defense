@@ -4,6 +4,7 @@ public class BlockSelector : MonoBehaviour
 {
     [SerializeField] private BlockDetector _blockDetector;
     [SerializeField] private Material _selectedMaterial;
+    [SerializeField] private bool _isGrassOnly = true;
 
     private Renderer _selectedBlockRenderer;
     private Material _oldMaterial;
@@ -26,6 +27,9 @@ public class BlockSelector : MonoBehaviour
 
     private void OnBlockDetected(BlockScript block)
     {
+        if (_isGrassOnly && !block.CompareTag("GrassBlock"))
+            return;
+
        if (_selectedBlockRenderer != null)
             _selectedBlockRenderer.material = _oldMaterial;
 

@@ -71,7 +71,7 @@ public class TurretsShop : MonoBehaviour
 
     private void OnBlockClicked(BlockScript block)
     {
-        if (!_isTurretSelected || _selectedTurret.Price > _wallet.Money)
+        if (!block.CompareTag("GrassBlock") || !_isTurretSelected || _selectedTurret.Price > _wallet.Money)
             return;
 
         var pos = block.transform.position;
