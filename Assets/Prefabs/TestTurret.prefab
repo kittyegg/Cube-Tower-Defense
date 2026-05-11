@@ -47,6 +47,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::Turret
   _bulletPrefab: {fileID: 2630910966893525057, guid: 73dab2e2f6b94fed1bca337e79ee22f4, type: 3}
   _reloadTime: 1
+  _damage: 0
+  _distance: 0
+  _price: 100
 --- !u!1 &4329906039658757740
 GameObject:
   m_ObjectHideFlags: 0

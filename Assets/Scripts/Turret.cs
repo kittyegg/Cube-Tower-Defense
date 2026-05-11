@@ -7,8 +7,11 @@ public class Turret : MonoBehaviour
     [SerializeField] private float _reloadTime = 1f;
     [SerializeField] private float _damage;
     [SerializeField] private float _distance;
+    [SerializeField] private int _price;
 
     private float _reloadTimer;
+
+    public int Price => _price;
 
     private void Update()
     {
@@ -38,4 +41,9 @@ public class Turret : MonoBehaviour
     private bool DetectEnemy(Vector3 direction) =>
         Physics.Raycast(transform.position, direction, out var hit, _bulletPrefab.Distance + _distance) &&
         hit.transform.TryGetComponent(out Enemy _);
+
+    public void OnMouseDown()
+    {
+        print("Click on turret");
+    }
 }
