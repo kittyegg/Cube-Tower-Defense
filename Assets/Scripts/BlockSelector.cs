@@ -33,7 +33,7 @@ public class BlockSelector : MonoBehaviour
        if (_selectedBlockRenderer != null)
             _selectedBlockRenderer.material = _oldMaterial;
 
-       _selectedBlockRenderer = block.GetComponent<Renderer>();
+       _selectedBlockRenderer = block.GetComponentInChildren<Renderer>();
         _oldMaterial = _selectedBlockRenderer.material;
         _selectedBlockRenderer.material = _selectedMaterial;
     }
