@@ -8,7 +8,8 @@ public class BlockScript : MonoBehaviour
         None,
         Grass,
         Sand,
-        PathFinish
+        PathFinish,
+        Turret
     }
 
     [SerializeField] private BlockType _type = BlockType.None;
