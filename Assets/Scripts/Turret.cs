@@ -41,9 +41,4 @@ public class Turret : MonoBehaviour
     private bool DetectEnemy(Vector3 direction) =>
         Physics.Raycast(transform.position, direction, out var hit, _bulletPrefab.Distance + _distance) &&
         hit.transform.TryGetComponent(out Enemy _);
-
-    public void OnMouseDown()
-    {
-        print("Click on turret");
-    }
 }
