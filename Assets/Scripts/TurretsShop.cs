@@ -13,6 +13,8 @@ public class TurretsShop : MonoBehaviour
     [SerializeField] private TurretShopItem[] _turretShopItems;
     [SerializeField] private UnityEvent<TurretShopItem> _onTurretSelected;
     [SerializeField] private UnityEvent _onTurretDeselected;
+    [SerializeField] private UnityEvent _onDestroyTurretSelected;
+    [SerializeField] private UnityEvent _onDestroyTurretDeselected;
 
     public event UnityAction<TurretShopItem> OnTurretSelected
     {
@@ -26,16 +28,32 @@ public class TurretsShop : MonoBehaviour
         remove => _onTurretDeselected.RemoveListener(value);
     }
 
+    public event UnityAction OnDestroyTurretSelected
+    {
+        add => _onDestroyTurretSelected.AddListener(value);
+        remove => _onDestroyTurretSelected.RemoveListener(value);
+    }
+
+    public event UnityAction OnDestroyTurretDeselected
+    {
+        add => _onDestroyTurretDeselected.AddListener(value);
+        remove => _onDestroyTurretDeselected.RemoveListener(value);
+    }
+
     public IReadOnlyCollection<TurretShopItem> TurretShopItems => _turretShopItems;
 
     private TurretShopItem _selectedTurret;
     private bool _isTurretSelected = false;
-    
+    private bool _isDestroySelected = false;
+
     public void SelectTurret(TurretShopItem item)
     {
         _isTurretSelected = _wallet.Money >= item.Price;
         if (!_isTurretSelected)
             return;
+
+        if (_isDestroySelected)
+            DeselectDestroyTurret();
 
         _selectedTurret = item;
         _onTurretSelected?.Invoke(item);
@@ -45,6 +63,21 @@ public class TurretsShop : MonoBehaviour
     {
         _isTurretSelected = false;
         _onTurretDeselected?.Invoke();
+    }
+
+    public void SelectDestroyTurret()
+    {
+        if (_isTurretSelected)
+            DeselectTurret();
+
+        _isDestroySelected = true;
+        _onDestroyTurretSelected?.Invoke();
+    }
+
+    public void DeselectDestroyTurret()
+    {
+        _isDestroySelected = false;
+        _onDestroyTurretDeselected?.Invoke();
     }
 
     private void OnEnable()
@@ -68,7 +101,13 @@ public class TurretsShop : MonoBehaviour
             _turretsHolder = transform;
     }
 
-    private void DeselectActionPerformed(InputAction.CallbackContext _) => DeselectTurret();
+    private void DeselectActionPerformed(InputAction.CallbackContext _)
+    {
+        if (_isTurretSelected)
+            DeselectTurret();
+        else if (_isDestroySelected)
+            DeselectDestroyTurret();
+    }
 
     private void OnBlockClicked(BlockScript block)
     {
@@ -92,8 +131,7 @@ public class TurretsShop : MonoBehaviour
 
     private void DestroyTurret(Turret turret)
     {
-        // TODO: проверять нажата ли кнопку продажи туррелей
-        if (turret == null)
+        if (turret == null || !_isDestroySelected)
             return;
 
         _wallet.AddMoney(Mathf.RoundToInt(turret.Price * _sellingCoefficient));
