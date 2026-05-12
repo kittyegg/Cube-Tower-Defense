@@ -11,6 +11,7 @@ public class Enemy : MonoBehaviour
     [SerializeField] private int _killReward = 10;
     [SerializeField] private UnityEvent<float> _onHealthChanged;
     [SerializeField] private UnityEvent<OnEnemyDeathEventArgs> _onDeath;
+    [SerializeField] private UnityEvent _onDestroyed;
     
     private Queue<Vector3> _path;
     private Vector3 _target;
@@ -26,7 +27,13 @@ public class Enemy : MonoBehaviour
         add => _onDeath.AddListener(value);
         remove => _onDeath.RemoveListener(value);
     }
-    
+
+    public event UnityAction OnDestroyed
+    {
+        add => _onDestroyed.AddListener(value);
+        remove => _onDestroyed.RemoveListener(value);
+    }
+
     public SandPathBuildService PathBuildService
     {
         get => _pathService;
@@ -81,6 +88,8 @@ public class Enemy : MonoBehaviour
             Destroy(gameObject);
         }
     }
+
+    private void OnDestroy() => _onDestroyed?.Invoke();
 
     public class OnEnemyDeathEventArgs
     {

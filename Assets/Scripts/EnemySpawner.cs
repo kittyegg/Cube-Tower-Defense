@@ -1,7 +1,6 @@
-using System;
 using System.Collections;
 using UnityEngine;
-using System.Collections.Generic;
+using UnityEngine.Events;
 
 public class EnemySpawner : MonoBehaviour
 {
@@ -9,9 +8,13 @@ public class EnemySpawner : MonoBehaviour
     [SerializeField] private SandPathBuildService _pathBuildService;
     [SerializeField] private Transform _enemyHolder;
     [SerializeField] private Transform _spawnPoint;
-    [SerializeField] private Wallet _wallet;
+    [SerializeField] private UnityEvent<Enemy> _onEnemySpawned;
 
-    //private readonly List<Enemy> _enemies = new();
+    public event UnityAction<Enemy> OnEnemySpawned
+    {
+        add => _onEnemySpawned.AddListener(value);
+        remove => _onEnemySpawned.RemoveListener(value);
+    }
 
     private void Awake()
     {
@@ -42,8 +45,7 @@ public class EnemySpawner : MonoBehaviour
         {
             var enemy = Instantiate(prefab, _spawnPoint.position, _spawnPoint.rotation, _enemyHolder);
             enemy.PathBuildService = _pathBuildService;
-            enemy.OnDeath += e => _wallet.AddMoney(e.KillReward);
-            //_enemies.Add(enemy);
+            _onEnemySpawned?.Invoke(enemy);
 
             yield return wait;
         }

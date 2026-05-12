@@ -5,6 +5,7 @@ public class Debugger : MonoBehaviour
     [SerializeField] private GameManager _gameManager;
     [SerializeField] private SandPathBuildService _sandPathBuildService;
     [SerializeField] private TurretsShop _turretShop;
+    [SerializeField] private SpawnDeathEnemyController _spawnDeathControl;
 
     private void OnEnable()
     {
@@ -12,6 +13,7 @@ public class Debugger : MonoBehaviour
         _sandPathBuildService.OnBuildComplete += OnBuildComplete;
         _turretShop.OnTurretSelected += OnTurretSelected;
         _turretShop.OnTurretDeselected += OnTurretDeselected;
+        _spawnDeathControl.OnLastEnemyDestroyed += OnLastEnemyDestroyed;
     }
 
     private void OnDisable()
@@ -20,6 +22,7 @@ public class Debugger : MonoBehaviour
         _sandPathBuildService.OnBuildComplete -= OnBuildComplete;
         _turretShop.OnTurretSelected -= OnTurretSelected;
         _turretShop.OnTurretDeselected -= OnTurretDeselected;
+        _spawnDeathControl.OnLastEnemyDestroyed -= OnLastEnemyDestroyed;
     }
 
     private static void OnGameStateChanged(GameManager.GameState newState)
@@ -40,5 +43,10 @@ public class Debugger : MonoBehaviour
     private static void OnTurretDeselected()
     {
         print("Turret deselected");
+    }
+
+    private void OnLastEnemyDestroyed()
+    {
+        print("Last enemy destroyed");
     }
 }
