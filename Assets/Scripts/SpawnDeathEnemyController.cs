@@ -4,7 +4,6 @@ using UnityEngine.Events;
 
 public class SpawnDeathEnemyController : MonoBehaviour
 {
-    [SerializeField] private GameManager _gameManager;
     [SerializeField] private EnemySpawner _enemySpawner;
     [SerializeField] private Wallet _wallet;
     [SerializeField] private UnityEvent _onLastEnemyDestroyed;
