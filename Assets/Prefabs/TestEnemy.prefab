@@ -28,7 +28,7 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 3.991, y: 1.035, z: -9.936}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 0.5, y: 1, z: 0.5}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 4358740754901839407}
@@ -47,8 +47,19 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Enemy
   _pathService: {fileID: 0}
+  _health: 5
   _speed: 1
   _damage: 1
+  _killReward: 10
+  _onHealthChanged:
+    m_PersistentCalls:
+      m_Calls: []
+  _onDeath:
+    m_PersistentCalls:
+      m_Calls: []
+  _onDestroyed:
+    m_PersistentCalls:
+      m_Calls: []
 --- !u!65 &4691593706010193046
 BoxCollider:
   m_ObjectHideFlags: 0
