@@ -8,6 +8,9 @@ public class MainMenu : MonoBehaviour
         SceneManager.LoadScene("Island");
     }
 
-    public void SourceCodeLinkClick() =>
+    public void GitHubLinkClick() =>
         Application.OpenURL("https://github.com/ryzij/Cube-Tower-Defense");
+
+    public void GiteaLinkClick() =>
+        Application.OpenURL("https://gitea.aloegames.com/ryzij/Cube-Tower-Defense");
 }
