@@ -15,27 +15,23 @@ public class Turret : MonoBehaviour
 
     private void Update()
     {
-        if (_reloadTimer >= _reloadTime)
-        {
-            SpawnBullet(Vector3.forward);
-            SpawnBullet(Vector3.back);
-            SpawnBullet(Vector3.left);
-            SpawnBullet(Vector3.right);
-            
-            _reloadTimer = 0f;
-        }
-        
+        SpawnBullet(Vector3.forward);
+        SpawnBullet(Vector3.back);
+        SpawnBullet(Vector3.left);
+        SpawnBullet(Vector3.right);
+
         _reloadTimer += Time.deltaTime;
     }
 
     private void SpawnBullet(Vector3 direction)
     {
-        if (!DetectEnemy(direction))
+        if (_reloadTimer < _reloadTime || !DetectEnemy(direction))
             return;
-        
+
         var rot = transform.rotation;
         rot.SetLookRotation(direction);
         Instantiate(_bulletPrefab, transform.position, rot, transform);
+        _reloadTimer = 0f;
     }
 
     private bool DetectEnemy(Vector3 direction) =>
