@@ -5,12 +5,14 @@ public class GameMenuButtons : MonoBehaviour
 {
     [SerializeField] private GameManager _gameManager;
     [SerializeField] private SandPathBuildService _sandPathBuildService;
+    [SerializeField] private Button _mainMenuButton;
     [SerializeField] private Button _nextLevelButton;
     [SerializeField] private Button _resetPathButton;
 
     private void OnEnable()
     {
         _gameManager.OnStateChanged += OnStateChanged;
+        _mainMenuButton.onClick.AddListener(ExitToMainMenu);
         
         if (_resetPathButton != null)
             _resetPathButton.onClick.AddListener(OnResetButtonClick);
@@ -19,6 +21,7 @@ public class GameMenuButtons : MonoBehaviour
     private void OnDisable()
     {
         _gameManager.OnStateChanged -= OnStateChanged;
+        _mainMenuButton.onClick.RemoveListener(ExitToMainMenu);
 
         if (_resetPathButton != null)
             _resetPathButton.onClick.RemoveListener(OnResetButtonClick);
@@ -40,4 +43,7 @@ public class GameMenuButtons : MonoBehaviour
         _sandPathBuildService.ResetPath();
         _gameManager.CurrentState = GameManager.GameState.BuildingPath;
     }
+
+    private void ExitToMainMenu() =>
+        UnityEngine.SceneManagement.SceneManager.LoadScene("MainMenu");
 }
