@@ -14,7 +14,7 @@ public class TowerHealth : MonoBehaviour
         add => _onHealthChanged.AddListener(value);
         remove => _onHealthChanged.RemoveListener(value);
     }
-
+    
     public float MaxHealth
     {
         get => _maxHealth;
@@ -47,10 +47,6 @@ public class TowerHealth : MonoBehaviour
     public void TakeDamage(float damage)
     {
         CurrentHealth -= damage;
-
-        // TODO: доделать проигрыш
-        if (CurrentHealth <= 0)
-            Debug.Log("Game over");
     }
 
     public class OnHealthChangedEventArgs : EventArgs

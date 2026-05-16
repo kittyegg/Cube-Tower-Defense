@@ -2336,7 +2336,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 473347667}
+      - m_Target: {fileID: 359661414}
         m_TargetAssemblyTypeName: GameOverMenu, Assembly-CSharp
         m_MethodName: RestartGame
         m_Mode: 1
@@ -2733,6 +2733,57 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 5368672011475721328, guid: 8dd20c91f0d7a7b419f6bedcd1870cba, type: 3}
   m_PrefabInstance: {fileID: 352804702}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &359661412
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 359661413}
+  - component: {fileID: 359661414}
+  m_Layer: 0
+  m_Name: GameOverMenu
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!224 &359661413
+RectTransform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 359661412}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children:
+  - {fileID: 473347664}
+  m_Father: {fileID: 1678567591}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_AnchorMin: {x: 0.5, y: 0.5}
+  m_AnchorMax: {x: 0.5, y: 0.5}
+  m_AnchoredPosition: {x: 0, y: 0}
+  m_SizeDelta: {x: 0, y: 0}
+  m_Pivot: {x: 0.5, y: 0.5}
+--- !u!114 &359661414
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 359661412}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 79c22679605c9274ab2a50d6c80e2b19, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::GameOverMenu
+  _tower: {fileID: 1739395621}
+  _menuPanel: {fileID: 473347664}
 --- !u!1001 &360688809
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -3258,7 +3309,6 @@ GameObject:
   - component: {fileID: 473347664}
   - component: {fileID: 473347666}
   - component: {fileID: 473347665}
-  - component: {fileID: 473347667}
   m_Layer: 0
   m_Name: GameOverPanel
   m_TagString: Untagged
@@ -3273,19 +3323,19 @@ RectTransform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 473347663}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 1168350718}
   - {fileID: 2107886998}
-  m_Father: {fileID: 1678567591}
+  m_Father: {fileID: 359661413}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
   m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 0, y: 0}
+  m_SizeDelta: {x: 846.34344, y: 567.14557}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &473347665
 MonoBehaviour:
@@ -3325,18 +3375,6 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 473347663}
   m_CullTransparentMesh: 1
---- !u!114 &473347667
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 473347663}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 79c22679605c9274ab2a50d6c80e2b19, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::GameOverMenu
 --- !u!1001 &477181437
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -4188,6 +4226,7 @@ MonoBehaviour:
   _sandPathBuildService: {fileID: 305503}
   _turretShop: {fileID: 1311268619}
   _spawnDeathControl: {fileID: 694046010}
+  _tower: {fileID: 1739395621}
 --- !u!1 &645921916
 GameObject:
   m_ObjectHideFlags: 0
@@ -6626,7 +6665,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 473347667}
+      - m_Target: {fileID: 359661414}
         m_TargetAssemblyTypeName: GameOverMenu, Assembly-CSharp
         m_MethodName: MainMenu
         m_Mode: 1
@@ -11302,7 +11341,7 @@ RectTransform:
   m_Children:
   - {fileID: 1789632538}
   - {fileID: 844851690}
-  - {fileID: 473347664}
+  - {fileID: 359661413}
   m_Father: {fileID: 424609984}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
@@ -11684,6 +11723,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 49451834470586d42a0a0039b348f818, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Tower
+  _onGameOver:
+    m_PersistentCalls:
+      m_Calls: []
 --- !u!4 &1739395622
 Transform:
   m_ObjectHideFlags: 0
