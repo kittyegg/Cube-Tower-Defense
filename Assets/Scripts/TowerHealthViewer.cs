@@ -1,9 +1,12 @@
-using System;
 using UnityEngine;
+using UnityEngine.UI;
 
+[RequireComponent(typeof(Slider))]
 public class TowerHealthViewer : MonoBehaviour
 {
     [SerializeField] private TowerHealth _towerHealth;
+
+    private Slider _slider;
 
     private void OnEnable()
     {
@@ -15,8 +18,13 @@ public class TowerHealthViewer : MonoBehaviour
         _towerHealth.OnHealthChanged -= OnHealthChanged;
     }
 
-    private static void OnHealthChanged(TowerHealth.OnHealthChangedEventArgs e)
+    private void Start()
     {
-        print("Health changed: " + e.CurrentHealth);
+        _slider = GetComponent<Slider>();
+    }
+
+    private void OnHealthChanged(TowerHealth.OnHealthChangedEventArgs e)
+    {
+        _slider.value = _slider.maxValue / e.MaxHealth * e.CurrentHealth;
     }
 }
