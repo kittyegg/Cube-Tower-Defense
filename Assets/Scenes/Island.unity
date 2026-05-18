@@ -9816,6 +9816,14 @@ MonoBehaviour:
       m_Groups: 
       m_Action: Deselect
       m_Flags: 0
+    - m_Name: 
+      m_Id: deb5c6fa-481c-4811-a3ae-403ba593dfe2
+      m_Path: <Keyboard>/space
+      m_Interactions: 
+      m_Processors: 
+      m_Groups: 
+      m_Action: Deselect
+      m_Flags: 0
     m_Flags: 0
   _sellingCoefficient: 0.5
   _turretShopItems:
