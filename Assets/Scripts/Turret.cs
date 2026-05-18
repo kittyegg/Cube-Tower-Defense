@@ -6,12 +6,14 @@ public class Turret : MonoBehaviour
     [SerializeField] private TurretBullet _bulletPrefab;
     [SerializeField] private float _reloadTime = 1f;
     [SerializeField] private float _damage;
-    [SerializeField] private float _distance;
+    [SerializeField] private float _distance = 3f;
     [SerializeField] private int _price;
 
     private float _reloadTimer;
 
     public int Price => _price;
+    public float Damage => _damage;
+    public float Distance => _distance;
 
     private void Update()
     {
@@ -28,9 +30,7 @@ public class Turret : MonoBehaviour
         if (_reloadTimer < _reloadTime || !DetectEnemy(direction))
             return;
 
-        var rot = transform.rotation;
-        rot.SetLookRotation(direction);
-        Instantiate(_bulletPrefab, transform.position, rot, transform);
+        _bulletPrefab.Spawn(this, direction);
         _reloadTimer = 0f;
     }
 
