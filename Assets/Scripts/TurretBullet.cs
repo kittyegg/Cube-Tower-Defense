@@ -23,13 +23,13 @@ public class TurretBullet : MonoBehaviour
             Destroy(gameObject);
     }
 
-    public TurretBullet Spawn(Turret turret, Vector3 direction)
+    public TurretBullet Spawn(Turret turret, Vector3 spawnPoint, Vector3 direction)
     {
         var rot = turret.transform.rotation;
         rot.SetLookRotation(direction);
-        var bullet = Instantiate(this, turret.transform.position, rot, turret.transform);
+        var bullet = Instantiate(this, spawnPoint, rot, turret.transform);
         bullet._damage += turret.Damage;
-        bullet._distance += turret.Distance;
+        bullet._distance += turret.Distance - Vector3.Distance(spawnPoint, bullet.transform.position);
 
         return bullet;
     }

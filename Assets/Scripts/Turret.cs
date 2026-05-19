@@ -1,9 +1,9 @@
-using System;
 using UnityEngine;
 
 public class Turret : MonoBehaviour
 {
     [SerializeField] private TurretBullet _bulletPrefab;
+    [SerializeField] private Transform _bulletSpawnPoint;
     [SerializeField] private float _reloadTime = 1f;
     [SerializeField] private float _damage;
     [SerializeField] private float _distance = 3f;
@@ -14,6 +14,12 @@ public class Turret : MonoBehaviour
     public int Price => _price;
     public float Damage => _damage;
     public float Distance => _distance;
+
+    private void Start()
+    {
+        if (_bulletSpawnPoint == null)
+            _bulletSpawnPoint = transform;
+    }
 
     private void Update()
     {
@@ -30,7 +36,7 @@ public class Turret : MonoBehaviour
         if (_reloadTimer < _reloadTime || !DetectEnemy(direction))
             return;
 
-        _bulletPrefab.Spawn(this, direction);
+        _bulletPrefab.Spawn(this, _bulletSpawnPoint.position, direction);
         _reloadTimer = 0f;
     }
 
