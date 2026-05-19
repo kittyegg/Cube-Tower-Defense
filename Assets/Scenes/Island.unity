@@ -9827,7 +9827,7 @@ MonoBehaviour:
     m_Flags: 0
   _sellingCoefficient: 0.5
   _turretShopItems:
-  - _turretPrefab: {fileID: 29170313400163205, guid: 3b45d2ca13d22161184139d06f3926da, type: 3}
+  - _turretPrefab: {fileID: 1128128508282001352, guid: 7f26b5a7dee15d04ba8f57d552771424, type: 3}
     _icon: {fileID: 21300000, guid: dd4f6cfdf80256a46ad9ef574dad72c6, type: 3}
   _onTurretSelected:
     m_PersistentCalls:
