@@ -9,7 +9,6 @@ public class TurretsShop : MonoBehaviour
     [SerializeField] private BlockDetector _blockDetector;
     [SerializeField] private Transform _turretsHolder;
     [SerializeField] private InputAction _deselectAction;
-    [SerializeField] private float _sellingCoefficient = 0.5f;
     [SerializeField] private TurretShopItem[] _turretShopItems;
     [SerializeField] private UnityEvent<TurretShopItem> _onTurretSelected;
     [SerializeField] private UnityEvent _onTurretDeselected;
@@ -134,7 +133,7 @@ public class TurretsShop : MonoBehaviour
         if (turret == null || !_isDestroySelected)
             return;
 
-        _wallet.AddMoney(Mathf.RoundToInt(turret.Price * _sellingCoefficient));
+        _wallet.AddMoney(turret.SellPrice);
         Destroy(turret.gameObject);
     }
 }

@@ -2,23 +2,44 @@ using UnityEngine;
 
 public class Turret : MonoBehaviour
 {
+    [Header("References")]
     [SerializeField] private TurretBullet _bulletPrefab;
     [SerializeField] private Transform _bulletSpawnPoint;
+    [Header("Stats")]
     [SerializeField] private float _reloadTime = 1f;
     [SerializeField] private float _damage;
     [SerializeField] private float _distance = 3f;
+    [Header("Economy")]
     [SerializeField] private int _price;
+    [SerializeField] private float _sellingMultiplier = 0.5f;
+    [SerializeField] private float _upgradeCostMultiplier = 0.2f;
+    [SerializeField] private float _upgradeCostMultiplierIncrement = 0.1f;
+    [Header("Upgrade")]
+    [SerializeField] private float _upgradeDamageMultiplier = 1.5f;
+    [SerializeField] private float _upgradeDistanceMultiplier = 1.5f;
+    [SerializeField] private float _upgradeReloadTimeMultiplier = 0.75f;
 
     private float _reloadTimer;
 
     public int Price => _price;
     public float Damage => _damage;
     public float Distance => _distance;
+    public int SellPrice => Mathf.RoundToInt(_price * _sellingMultiplier);
+    public int UpgradeCost => Mathf.RoundToInt(_price * _upgradeCostMultiplier);
 
     private void Start()
     {
         if (_bulletSpawnPoint == null)
             _bulletSpawnPoint = transform;
+    }
+
+    public void Upgrade()
+    {
+        // TODO: исправить умножение на 0
+        _damage *= _upgradeDamageMultiplier;
+        _distance *= _upgradeDistanceMultiplier;
+        _reloadTime *= _upgradeReloadTimeMultiplier;
+        _upgradeCostMultiplier += _upgradeCostMultiplierIncrement;
     }
 
     private void Update()
