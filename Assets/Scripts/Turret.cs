@@ -25,7 +25,7 @@ public class Turret : MonoBehaviour
     public float Damage => _damage;
     public float Distance => _distance;
     public int SellPrice => Mathf.RoundToInt(_price * _sellingMultiplier);
-    public int UpgradeCost => Mathf.RoundToInt(_price * _upgradeCostMultiplier);
+    public int UpgradeCost => Mathf.CeilToInt(_price * _upgradeCostMultiplier);
 
     private void Start()
     {

@@ -1,5 +1,6 @@
 using UnityEngine;
 using UnityEngine.UI;
+using static UnityEngine.GraphicsBuffer;
 
 public class TurretUpgradeViewer : MonoBehaviour
 {
@@ -15,12 +16,14 @@ public class TurretUpgradeViewer : MonoBehaviour
     {
         _wallet.OnMoneyChanged += OnMoneyChanged;
         _turretUpdater.OnTurretClicked += OnTurretClicked;
+        _turretUpdater.OnTurretUpgraded += UpdateBtn;
     }
 
     private void OnDisable()
     {
         _wallet.OnMoneyChanged -= OnMoneyChanged;
         _turretUpdater.OnTurretClicked -= OnTurretClicked;
+        _turretUpdater.OnTurretUpgraded -= UpdateBtn;
     }
 
     private void OnMoneyChanged(int newMoney)
@@ -37,6 +40,11 @@ public class TurretUpgradeViewer : MonoBehaviour
         }
         
         _viewerHolder.gameObject.SetActive(true);
+        UpdateBtn(turret);
+    }
+
+    private void UpdateBtn(Turret turret)
+    {
         _upgradeCost = turret.UpgradeCost;
         _upgradeCostText.text = _upgradeCost.ToString();
         _upgradeButton.interactable = _wallet.Money >= _upgradeCost;

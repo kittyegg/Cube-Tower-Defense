@@ -10,11 +10,18 @@ public class TurretUpdater : MonoBehaviour
     [SerializeField] private Button _sellButton;
     [SerializeField] private Button _upgradeButton;
     [SerializeField] private UnityEvent<Turret> _onTurretClicked;
+    [SerializeField] private UnityEvent<Turret> _onTurretUpgraded;
 
     public event UnityAction<Turret> OnTurretClicked
     {
         add => _onTurretClicked.AddListener(value);
         remove => _onTurretClicked.RemoveListener(value);
+    }
+
+    public event UnityAction<Turret> OnTurretUpgraded
+    {
+        add => _onTurretUpgraded.AddListener(value);
+        remove => _onTurretUpgraded.RemoveListener(value);
     }
 
     private Turret _clickedTurret;
@@ -81,6 +88,7 @@ public class TurretUpdater : MonoBehaviour
 
         _wallet.TakeMoney(ClickedTurret.UpgradeCost);
         ClickedTurret.Upgrade();
+        _onTurretUpgraded?.Invoke(ClickedTurret);
     }
 
     private void SellTurret()
