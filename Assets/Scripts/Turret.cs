@@ -15,17 +15,17 @@ public class Turret : MonoBehaviour
     [SerializeField] private float _upgradeCostMultiplier = 0.2f;
     [SerializeField] private float _upgradeCostMultiplierIncrement = 0.1f;
     [Header("Upgrade")]
-    [SerializeField] private float _upgradeDamageMultiplier = 1.5f;
-    [SerializeField] private float _upgradeDistanceMultiplier = 1.5f;
-    [SerializeField] private float _upgradeReloadTimeMultiplier = 0.75f;
+    [SerializeField] TurretUpgrade[] _upgrades;
 
     private float _reloadTimer;
+    private int _lvl;
 
     public int Price => _price;
     public float Damage => _damage;
     public float Distance => _distance;
     public int SellPrice => Mathf.RoundToInt(_price * _sellingMultiplier);
     public int UpgradeCost => Mathf.RoundToInt(_price * _upgradeCostMultiplier);
+    public bool IsMaxLevel => _lvl >= _upgrades.Length - 1;
 
     private void Start()
     {
@@ -35,10 +35,14 @@ public class Turret : MonoBehaviour
 
     public void Upgrade()
     {
+        if (IsMaxLevel)
+            return;
+
+        var upgrade = _upgrades[_lvl++];
         // TODO: исправить умножение на 0
-        _damage *= _upgradeDamageMultiplier;
-        _distance *= _upgradeDistanceMultiplier;
-        _reloadTime *= _upgradeReloadTimeMultiplier;
+        _damage *= upgrade.UpgradeDamageMultiplier;
+        _distance *= upgrade.UpgradeDistanceMultiplier;
+        _reloadTime *= upgrade.UpgradeReloadTimeMultiplier;
         _upgradeCostMultiplier += _upgradeCostMultiplierIncrement;
     }
 

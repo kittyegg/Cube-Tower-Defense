@@ -46,6 +46,6 @@ public class TurretUpgradeViewer : MonoBehaviour
     {
         _upgradeCost = turret.UpgradeCost;
         _upgradeCostText.text = _upgradeCost.ToString();
-        _upgradeButton.interactable = _wallet.Money >= _upgradeCost;
+        _upgradeButton.interactable = _wallet.Money >= _upgradeCost && !turret.IsMaxLevel;
     }
 }
